@@ -1,0 +1,33 @@
+# ================================
+# CONFIGURATION VARIABLES D'ENVIRONNEMENT
+# ================================
+# Ce fichier contient toutes les informations sensibles de votre application
+# IMPORTANT: Ne jamais partager ce fichier ou le commiter sur Git !
+
+# ================================
+# CONFIGURATION SERVEUR
+# ================================
+# Port sur lequel le serveur va tourner (Render définira automatiquement)
+PORT=3000
+
+# Environnement de l'application (development/production)
+NODE_ENV=development
+
+# URL de votre frontend (à ajuster selon votre hébergement)
+FRONTEND_URL=http://localhost:3000
+
+# ================================
+# CONFIGURATION EMAIL ALBAARCHIVIO.COM
+# ================================
+# Configuration pour votre serveur email personnalisé
+
+# Votre adresse email complète
+EMAIL_USER=noreply@albaarchivio.com
+
+# Le mot de passe de votre compte email
+EMAIL_PASSWORD=jQ7*_h1HXN34!ws
+
+# Configuration SMTP - Serveur principal
+SMTP_HOST=mail.albaarchivio.com
+SMTP_PORT=465
+
