@@ -107,7 +107,7 @@ try {
         transporter = nodemailer.createTransport({
             host: process.env.SMTP_HOST || 'mail.albaarchivio.com',
             port: parseInt(process.env.SMTP_PORT) || 587,
-            secure: false, // IMPORTANT: false pour le port 587 (utilise STARTTLS)
+            secure: true, // IMPORTANT: false pour le port 587 (utilise STARTTLS)
             auth: {
                 user: process.env.EMAIL_USER || 'noreply@albaarchivio.com',
                 pass: process.env.EMAIL_PASSWORD
