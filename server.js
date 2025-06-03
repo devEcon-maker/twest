@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 
 // Configuration de base
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: 'https://twest-odwk.onrender.com' }));
 
 // NOUVEAU : Servir les fichiers statiques (HTML, CSS, JS, images)
 app.use(express.static('./')); // Sert tous les fichiers depuis la racine du projet
