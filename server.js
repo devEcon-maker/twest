@@ -14,7 +14,21 @@ const PORT = process.env.PORT || 3000;
 
 // Configuration de base
 app.use(express.json());
-app.use(cors({ origin: 'https://twest-odwk.onrender.com' }));
+app.use(cors({
+    origin: 'https://twest-odwk.onrender.com',
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+
+app.options('*', (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "https://twest-odwk.onrender.com");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.sendStatus(200);
+});
+
+
 
 // NOUVEAU : Servir les fichiers statiques (HTML, CSS, JS, images)
 app.use(express.static('./')); // Sert tous les fichiers depuis la racine du projet
