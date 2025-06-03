@@ -15,7 +15,7 @@ const CONFIG = {
     // URL de base de l'API - à modifier selon l'environnement
     API_BASE_URL: window.location.hostname === 'localhost' 
         ? 'http://localhost:3000' 
-        : 'https://twest-odwk.onrender.com', // Remplacez par votre URL Render
+        : 'https://twest-twinger.onrender.com', // Remplacez par votre URL Render
     
     // Timeouts et paramètres de requête
     REQUEST_TIMEOUT: 10000, // 10 secondes

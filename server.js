@@ -78,14 +78,14 @@ try {
     // Configuration CORS pour autoriser les requêtes depuis votre frontend
     // Ceci résout les problèmes de sécurité cross-origin
     app.use(cors({
-        origin: 'https://twest-odwk.onrender.com',
+        origin: 'https://twest-twinger.onrender.com',
         methods: ['GET', 'POST', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'Authorization'],
         credentials: true,
         preflightContinue: false,
         optionsSuccessStatus: 200
     }));
-    console.log('✓ Middleware CORS configuré pour:', 'https://twest-odwk.onrender.com');
+    console.log('✓ Middleware CORS configuré pour:', 'https://twest-twinger.onrender.com');
 
     
     
