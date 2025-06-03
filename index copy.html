@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Titre de votre page</title>
+    <style>
+      /* Styles pour rendre l'image responsive */
+      #corps-img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+
+      /* Media queries pour ajuster la taille de l'image sur différents appareils */
+      @media screen and (max-width: 768px) {
+        #corps-img {
+          max-width: 90%;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        #corps-img {
+          max-width: 80%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="corps">
+      <a href="connexion.html">
+        <img id="corps-img" src="assets/images/ss.png" />
+      </a>
+    </div>
+  </body>
+
+
+</html>

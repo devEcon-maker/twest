@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Titre de votre page</title>
+    <style>
+      /* Styles pour la barre de navigation en haut */
+      .nav-header {
+        background-color: #f8f9fa;
+        padding: 15px 20px;
+        border-bottom: 1px solid #e9ecef;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+
+      /* Style pour le lien de connexion */
+      .lien-connexion {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+      }
+
+      /* Effet au survol du lien */
+      .lien-connexion:hover {
+        background-color: #0056b3;
+        text-decoration: none;
+      }
+
+      /* Styles pour rendre l'image responsive */
+      #corps-img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+
+      /* Container principal pour espacer le contenu */
+      #corps {
+        padding: 20px;
+      }
+
+      /* Media queries pour ajuster la taille de l'image sur différents appareils */
+      @media screen and (max-width: 768px) {
+        #corps-img {
+          max-width: 90%;
+        }
+        
+        /* Ajustement de la navigation sur mobile */
+        .nav-header {
+          padding: 10px 15px;
+        }
+        
+        .lien-connexion {
+          padding: 8px 15px;
+          font-size: 14px;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        #corps-img {
+          max-width: 80%;
+        }
+        
+        /* Navigation encore plus compacte sur très petits écrans */
+        .nav-header {
+          padding: 8px 10px;
+        }
+        
+        .lien-connexion {
+          padding: 6px 12px;
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Barre de navigation en haut de page -->
+    <nav class="nav-header">
+      <a href="connexion.html" class="lien-connexion">Se connecter</a>
+    </nav>
+
+    <!-- Contenu principal avec votre image -->
+    <div id="corps">
+      <a href="connexion.html">
+        <img id="corps-img" src="assets/images/ss.png" alt="Image principale" />
+      </a>
+    </div>
+  </body>
+</html>

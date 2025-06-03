@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RIB - Identité Bancaire</title>
+  <link rel="stylesheet" href="cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <script src="cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="unpkg.com/ionicons%405.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="unpkg.com/ionicons%405.5.2/dist/ionicons/ionicons.js"></script>
+  <style>
+:root {
+  --primary-color: #00875A;       /* Vert principal Crédit Agricole */
+  --secondary-color: #006B47;     /* Vert foncé Crédit Agricole */
+  --accent-color: #84BD00;        /* Vert clair pour les accents */
+  --success-color: #4CAF50;       /* Vert pour validations */
+  --danger-color: #FF4B36;        /* Rouge Crédit Agricole pour alertes */
+  --background-color: #F8FBF9;    /* Vert très clair */
+  --card-background: #FFFFFF;     /* Blanc pur */
+  --text-primary: #1E1E1E;        /* Noir pour le texte */
+  --text-secondary: #666666;      /* Gris pour le texte secondaire */
+  --border-color: #E5E9E7;        /* Gris-vert clair pour les bordures */
+  --hover-color: #007A51;         /* Vert foncé hover */
+  --gradient-start: #00875A;      /* Début du dégradé (vert principal) */
+  --gradient-end: #84BD00;        /* Fin du dégradé (vert clair) */
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--background-color);
+  padding-bottom: 70px;
+}
+
+/* Header */
+.header {
+  background-color: white;
+  padding: 1.25rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+}
+
+.bank-logo {
+  height: 40px;
+  width: auto;
+}
+
+.logout-btn {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #cc0017;
+}
+
+/* Welcome Section */
+.welcome {
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+  margin: 1.5rem auto;
+  max-width: 1200px;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* RIB Container */
+.container {
+  max-width: 800px;
+  margin: 1.5rem auto;
+  background: var(--card-background);
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.rib_title {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1.25rem;
+  margin: 0;
+}
+
+.rib_title h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.rib_content {
+  padding: 1.5rem;
+  background: white;
+}
+
+.rib_part {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease;
+}
+
+.rib_part:hover {
+  background-color: rgba(0, 70, 135, 0.05);
+}
+
+.rib_part:last-child {
+  border-bottom: none;
+}
+
+.rib_label {
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin: 0;
+}
+
+.rib_value {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin: 0;
+  font-family: 'Courier New', monospace;
+}
+
+/* IBAN Section */
+.iban-section .rib_value {
+  letter-spacing: 1px;
+  font-size: 1.1rem;
+}
+
+/* Navigation */
+.navigation_bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.navigation {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.navigation ul {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  padding: 0.75rem 0;
+  margin: 0;
+  position: relative;
+}
+
+.navigation .list {
+  position: relative;
+  width: 70px;
+  z-index: 1;
+}
+
+.navigation .list a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: color 0.3s;
+}
+
+.navigation .list.active a {
+  color: var(--primary-color);
+}
+
+.navigation .icon {
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+}
+
+.navigation .text {
+  font-size: 0.75rem;
+}
+
+.indicator {
+  position: absolute;
+  bottom: -10px;
+  width: 70px;
+  height: 70px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  transition: 0.5s;
+  opacity: 0;
+}
+
+.navigation .list.active ~ .indicator {
+  opacity: 0.2;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .container {
+    margin: 1rem;
+  }
+
+  .rib_value {
+    font-size: 0.9rem;
+  }
+
+  .welcome {
+    margin: 1rem;
+  }
+
+  .rib_title {
+    padding: 1rem;
+  }
+
+  .rib_content {
+    padding: 1rem;
+  }
+
+  .rib_part {
+    padding: 0.875rem;
+  }
+}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-title">
+      <img src="assets/images/logo.png" alt="Attijariwafa Bank Logo" class="bank-logo">
+    </div>
+    <div class="user-menu">
+      <button class="logout-btn" onclick="deconnexion()">
+        <i class="fas fa-sign-out-alt"></i>
+        Déconnexion
+      </button>
+    </div>
+</header>
+
+  <div id="google_translate_element"></div>
+
+  <div class="welcome">
+    <h4>Relevé d'identité bancaire</h4>
+  </div>
+
+<!-- RIB National -->
+<div class="container">
+    <div class="rib_title">
+        <h3>RIB - Relevé d'Identité Bancaire</h3>
+    </div>
+    <div class="rib_content">
+        <div class="rib_part">
+            <p class="rib_label">Nom du Titulaire</p>
+            <p class="rib_value"> Séverine Rouyer </p>
+        </div>
+        <div class="rib_part">
+            <p class="rib_label">Code Banque</p>
+            <p class="rib_value">17806</p>
+        </div>
+        <div class="rib_part">
+            <p class="rib_label">Code Agence</p>
+            <p class="rib_value">12345</p>
+        </div>
+        <div class="rib_part">
+            <p class="rib_label">Numéro de Compte</p>
+            <p class="rib_value">82396408914</p>
+        </div>
+        <div class="rib_part">
+            <p class="rib_label">Clé RIB</p>
+            <p class="rib_value">12</p>
+        </div>
+        <div class="rib_part">
+            <p class="rib_label">Domiciliation</p>
+            <p class="rib_value">Crédit Agricole</p>
+        </div>
+    </div>
+</div>
+
+<!-- RIB International -->
+<div class="container">
+    <div class="rib_title">
+        <h3>Coordonnées Bancaires Internationales</h3>
+    </div>
+    <div class="rib_content">
+        <div class="rib_part iban-section">
+            <p class="rib_label">IBAN</p>
+            <p class="rib_value">FR76 1780 6123 4500 1823 9640 891 4</p>
+        </div>
+        <div class="rib_part">
+            <p class="rib_label">Code SWIFT (BIC)</p>
+            <p class="rib_value">AGRIFRPP</p>
+        </div>
+    </div>
+</div>
+
+
+
+
+  <!-- Navigation -->
+  <div class="navigation_bar">
+    <div class="navigation">
+      <ul>
+        <li class="list active">
+          <a href="solde.html">
+            <span class="icon">
+              <ion-icon name="wallet-outline"></ion-icon>
+            </span>
+            <span class="text">Solde</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="historique.html">
+            <span class="icon">
+              <ion-icon name="time-outline"></ion-icon>
+            </span>
+            <span class="text">Historique</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="virement.html">
+            <span class="icon">
+              <ion-icon name="swap-horizontal-outline"></ion-icon>
+            </span>
+            <span class="text">Virement</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="cartes.html">
+            <span class="icon">
+              <ion-icon name="card-outline"></ion-icon>
+            </span>
+            <span class="text">Cartes</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="rib.html">
+            <span class="icon">
+              <ion-icon name="document-text-outline"></ion-icon>
+            </span>
+            <span class="text">RIB</span>
+          </a>
+        </li>
+        <div class="indicator"></div>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Navigation
+    const list = document.querySelectorAll(".list");
+    function activeLink() {
+      list.forEach((item) => item.classList.remove("active"));
+      this.classList.add("active");
+    }
+    list.forEach((item) => item.addEventListener("click", activeLink));
+
+    
+  </script>
+  <script>
+    function deconnexion() {
+        if(confirm("Êtes-vous sûr de vouloir vous déconnecter ?")) {
+            window.location.href = 'connexion.html';
+        }
+    }
+</script>
+
+</body>
+
+
+</html>

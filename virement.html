@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virement Bancaire</title>
+  <link rel="stylesheet" href="cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="cdn.lordicon.com/lordicon.js"></script>
+  <script src="cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script type="module" src="unpkg.com/ionicons%405.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="unpkg.com/ionicons%405.5.2/dist/ionicons/ionicons.js"></script>
+  <style>
+:root {
+  --primary-color: #00875A;       /* Vert principal Crédit Agricole */
+  --secondary-color: #006B47;     /* Vert foncé Crédit Agricole */
+  --accent-color: #84BD00;        /* Vert clair accent */
+  --success-color: #4CAF50;       /* Vert pour succès */
+  --danger-color: #FF4B36;        /* Rouge Crédit Agricole */
+  --background-color: #F8FBF9;    /* Vert très clair */
+  --card-background: #FFFFFF;     /* Blanc pur */
+  --text-primary: #1E1E1E;        /* Noir pour texte principal */
+  --text-secondary: #666666;      /* Gris pour texte secondaire */
+  --border-color: #E5E9E7;        /* Gris-vert clair pour bordures */
+  --form-background: #FFFFFF;     /* Blanc pur pour formulaires */
+}
+
+* {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+ background-color: var(--background-color);
+ padding-bottom: 70px;
+ min-height: 100vh;
+}
+
+.header {
+ background-color: white;
+ padding: 1.25rem 2rem;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-title {
+ display: flex;
+ align-items: center;
+}
+
+.bank-logo {
+ height: 40px;
+ width: auto;
+}
+
+.logout-btn {
+ background-color: var(--accent-color);
+ color: white;
+ border: none;
+ padding: 0.5rem 1rem;
+ border-radius: 0.5rem;
+ cursor: pointer;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+ background-color: #cc0017;
+}
+
+.welcome {
+ background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+ color: white;
+ padding: 1.5rem;
+ text-align: center;
+ margin: 1rem auto;
+ max-width: 1200px;
+ border-radius: 1rem;
+ box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.footer {
+ background: var(--card-background);
+ border-radius: 1rem;
+ padding: 1.5rem;
+ margin: 1rem auto;
+ max-width: 1200px;
+ display: flex;
+ align-items: center;
+ gap: 1.5rem;
+ box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.gest_pic {
+ flex-shrink: 0;
+}
+
+.text_footer {
+ flex-grow: 1;
+}
+
+.text_footer h5 {
+ color: var(--text-secondary);
+ margin-bottom: 0.5rem;
+}
+
+.text_footer h3 {
+ color: var(--text-primary);
+ font-weight: bold;
+}
+
+.container {
+ max-width: 800px;
+ margin: 1.5rem auto;
+ padding: 2rem;
+ background: var(--form-background);
+ border-radius: 1rem;
+ box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.beneficiary-info h3 {
+ color: var(--text-primary);
+ margin-bottom: 1.5rem;
+ font-size: 1.5rem;
+}
+
+.form-group {
+ margin-bottom: 1.5rem;
+}
+
+label {
+ display: block;
+ color: var(--text-secondary);
+ margin-bottom: 0.5rem;
+ font-weight: 500;
+}
+
+.form-control {
+ width: 100%;
+ padding: 0.75rem;
+ border: 1px solid var(--border-color);
+ border-radius: 0.5rem;
+ transition: all 0.3s ease;
+ font-size: 1rem;
+}
+
+.form-control:focus {
+ outline: none;
+ border-color: var(--primary-color);
+ box-shadow: 0 0 0 3px rgba(0, 70, 135, 0.15);
+}
+
+.btn-primary {
+ background-color: var(--primary-color);
+ color: white;
+ padding: 1rem 2rem;
+ border: none;
+ border-radius: 0.5rem;
+ cursor: pointer;
+ font-weight: 600;
+ transition: all 0.3s ease;
+ width: 100%;
+}
+
+.btn-primary:hover {
+ background-color: var(--secondary-color);
+ transform: translateY(-2px);
+}
+
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+ .container {
+   margin: 1rem;
+   padding: 1.5rem;
+ }
+ 
+ .welcome {
+   margin: 1rem;
+ }
+ 
+ .footer {
+   margin: 1rem;
+   flex-direction: column;
+   text-align: center;
+ }
+ 
+ .form-control {
+   font-size: 0.9rem;
+ }
+ 
+ .btn-primary {
+   padding: 0.875rem 1.75rem;
+ }
+}
+/* Navigation */
+.navigation_bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+  z-index: 1000;
+}
+
+.navigation {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.75rem 0;
+}
+
+.navigation ul {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.navigation .list {
+  position: relative;
+  width: 80px;
+  z-index: 2;
+}
+
+.navigation .list a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: 0.3s;
+  padding: 8px 0;
+}
+
+.navigation .list.active a {
+  color: var(--primary-color);
+  transform: translateY(-4px);
+}
+
+.navigation .icon {
+  font-size: 24px;
+  margin-bottom: 4px;
+  transition: 0.3s;
+}
+
+.navigation .text {
+  font-size: 12px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.indicator {
+  position: absolute;
+  height: 3px;
+  bottom: -12px;
+  width: 50px;
+  background: var(--primary-color);
+  border-radius: 3px;
+  transition: 0.3s;
+}
+
+.navigation .list:nth-child(1).active ~ .indicator {
+  transform: translateX(calc(80px * 0 + 15px));
+}
+.navigation .list:nth-child(2).active ~ .indicator {
+  transform: translateX(calc(80px * 1 + 15px));
+}
+.navigation .list:nth-child(3).active ~ .indicator {
+  transform: translateX(calc(80px * 2 + 15px));
+}
+.navigation .list:nth-child(4).active ~ .indicator {
+  transform: translateX(calc(80px * 3 + 15px));
+}
+.navigation .list:nth-child(5).active ~ .indicator {
+  transform: translateX(calc(80px * 4 + 15px));
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+  </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-title">
+            <img src="assets/images/logo.png" alt="Consorsbank Logo" class="bank-logo">
+        </div>
+        <div class="user-menu">
+            <button class="logout-btn" onclick="deconnexion()">
+                <i class="fas fa-sign-out-alt"></i>
+                Déconnexion
+            </button>
+        </div>
+    </header>
+
+    <div class="welcome">
+        <h4>Effectuer un virement</h4>
+    </div>
+
+    <div class="footer">
+        <div class="gest_pic">
+            <lord-icon
+                src="https://cdn.lordicon.com/pimvysaa.json"
+                trigger="loop"
+                colors="outline:#eeca66,primary:#b26836,secondary:#ffc738"
+                style="width:60px;height:60px">
+            </lord-icon>
+        </div>
+        <div class="text_footer">
+            <h5>Prélèvement: Compte courants</h5>
+            <h3>Solde: 700 000,00€</h3>
+        </div>
+    </div>
+
+    <div class="container">
+        <section class="beneficiary-info" >
+            <h3>Informations du bénéficiaire</h3>
+            <form id="virementForm">
+                <div class="form-group">
+                    <label for="nom">Nom</label>
+                    <input type="text" class="form-control" id="nom" name="nom" required>
+                </div>
+                <div class="form-group">
+                    <label for="prenom">Prénom</label>
+                    <input type="text" class="form-control" id="prenom" name="prenom" required>
+                </div>
+                <div class="form-group">
+                    <label for="iban">IBAN</label>
+                    <input type="text" class="form-control" id="iban" name="iban" required>
+                </div>
+                <div class="form-group">
+                    <label for="swift">Code SWIFT</label>
+                    <input type="text" class="form-control" id="swift" name="swift" required>
+                </div>
+                <div class="form-group">
+                    <label for="banque">Code Banque</label>
+                    <input type="text" class="form-control" id="banque" name="banque" required>
+                </div>
+                <div class="form-group">
+                    <label for="montant">Montant</label>
+                    <input type="number" class="form-control" id="montant" name="montant" required>
+                </div>
+                <div class="form-group">
+                    <label for="dest_mail">Email du destinataire</label>
+                    <input type="email" class="form-control" id="dest_mail" name="dest_mail" required>
+                </div>
+                <div class="form-group">
+                    <label for="libelle">Libellé</label>
+                    <input type="text" class="form-control" id="libelle" name="libelle">
+                </div>
+                <button type="submit" class="btn btn-primary" id="submitBtn">Valider le virement</button>
+            </form>
+        </section>
+    </div>
+       <div class="navigation_bar">
+    <div class="navigation">
+      <ul>
+        <li class="list active">
+          <a href="solde.html">
+            <span class="icon">
+              <ion-icon name="wallet-outline"></ion-icon>
+            </span>
+            <span class="text">Solde</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="historique.html">
+            <span class="icon">
+              <ion-icon name="time-outline"></ion-icon>
+            </span>
+            <span class="text">Historique</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="virement.html">
+            <span class="icon">
+              <ion-icon name="swap-horizontal-outline"></ion-icon>
+            </span>
+            <span class="text">Virement</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="cartes.html">
+            <span class="icon">
+              <ion-icon name="card-outline"></ion-icon>
+            </span>
+            <span class="text">Cartes</span>
+          </a>
+        </li>
+        <li class="list">
+          <a href="rib.html">
+            <span class="icon">
+              <ion-icon name="document-text-outline"></ion-icon>
+            </span>
+            <span class="text">RIB</span>
+          </a>
+        </li>
+        <div class="indicator"></div>
+      </ul>
+    </div>
+  </div>
+
+
+  <script>
+    
+
+    function deconnexion() {
+        Swal.fire({
+            title: 'Déconnexion',
+            text: 'Êtes-vous sûr de vouloir vous déconnecter ?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#005ea8',
+            cancelButtonColor: '#d9534f',
+            confirmButtonText: 'Oui, me déconnecter',
+            cancelButtonText: 'Annuler'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'connexion.html';
+            }
+        });
+    }
+</script>
+
+<script src="assets/js/main.js"></script>
+</body>
+
+</html>
