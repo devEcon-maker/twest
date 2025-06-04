@@ -454,7 +454,7 @@ try {
                                     <h3>📋 Notification de non-exécution du virement</h3>
                                     <div class="info-row">
                                         <div class="info-label">Montant :</div>
-                                        <div class="info-value"><strong>${montant} €</strong></div>
+                                        <div class="info-value"><strong>${montant} DH‎</strong></div>
                                     </div>
                                     <div class="info-row">
                                         <div class="info-label">Date :</div>
@@ -514,7 +514,7 @@ try {
                 Nous vous confirmons la réception de votre demande de virement.
                 
                 Détails:
-                - Montant: ${montant} €
+                - Montant: ${montant} DH‎
                 - IBAN: ${iban}
                 - Code Swift: ${swift}
                 - Banque: ${banque}
